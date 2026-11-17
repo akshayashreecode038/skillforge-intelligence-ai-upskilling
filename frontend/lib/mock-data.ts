@@ -1,0 +1,585 @@
+import type {
+  User,
+  JobRole,
+  Skill,
+  SkillProfile,
+  LearningModule,
+  Assessment,
+  Project,
+  LearningProgress,
+  AIMessage,
+  Recommendation,
+  ActivityItem,
+} from './types';
+
+export const currentUser: User = {
+  id: 'u-001',
+  name: 'Alex Chen',
+  email: 'alex.chen@example.com',
+  education: 'B.S. Computer Science, UC Berkeley',
+  experienceLevel: 'intermediate',
+  currentOccupation: 'Junior QA Engineer',
+  targetRoleId: 'role-data-analyst',
+  createdAt: '2025-08-15T10:00:00Z',
+  streak: 12,
+  weeklyGoalMinutes: 300,
+  weeklyMinutesSpent: 185,
+};
+
+export const jobRoles: JobRole[] = [
+  {
+    id: 'role-data-analyst',
+    title: 'Data Analyst',
+    description: 'Analyze data, build dashboards, and drive business decisions with SQL, Python, and visualization.',
+    icon: 'bar-chart-3',
+    color: '199 89% 48%',
+    requiredSkills: [
+      { skillId: 'skill-sql', targetLevel: 85 },
+      { skillId: 'skill-python', targetLevel: 80 },
+      { skillId: 'skill-stats', targetLevel: 75 },
+      { skillId: 'skill-viz', targetLevel: 80 },
+      { skillId: 'skill-biz', targetLevel: 70 },
+    ],
+  },
+  {
+    id: 'role-software-dev',
+    title: 'Software Developer',
+    description: 'Build applications, write clean code, and master system design, APIs, and modern frameworks.',
+    icon: 'code-2',
+    color: '160 60% 45%',
+    requiredSkills: [
+      { skillId: 'skill-js', targetLevel: 85 },
+      { skillId: 'skill-react', targetLevel: 80 },
+      { skillId: 'skill-python', targetLevel: 75 },
+      { skillId: 'skill-sql', targetLevel: 70 },
+      { skillId: 'skill-cloud', targetLevel: 65 },
+    ],
+  },
+  {
+    id: 'role-ml-engineer',
+    title: 'ML Engineer',
+    description: 'Build and deploy machine learning models, from data pipelines to production inference systems.',
+    icon: 'brain-circuit',
+    color: '280 65% 60%',
+    requiredSkills: [
+      { skillId: 'skill-python', targetLevel: 90 },
+      { skillId: 'skill-ml', targetLevel: 85 },
+      { skillId: 'skill-stats', targetLevel: 80 },
+      { skillId: 'skill-sql', targetLevel: 70 },
+      { skillId: 'skill-cloud', targetLevel: 75 },
+    ],
+  },
+];
+
+export const allSkills: Skill[] = [
+  { id: 'skill-sql', name: 'SQL', category: 'data' },
+  { id: 'skill-python', name: 'Python', category: 'programming' },
+  { id: 'skill-stats', name: 'Statistics', category: 'statistics' },
+  { id: 'skill-viz', name: 'Data Visualization', category: 'data' },
+  { id: 'skill-biz', name: 'Business Analysis', category: 'business' },
+  { id: 'skill-js', name: 'JavaScript', category: 'programming' },
+  { id: 'skill-react', name: 'React', category: 'web' },
+  { id: 'skill-ml', name: 'Machine Learning', category: 'ml' },
+  { id: 'skill-cloud', name: 'Cloud & DevOps', category: 'cloud' },
+  { id: 'skill-excel', name: 'Excel', category: 'tools' },
+  { id: 'skill-java', name: 'Java', category: 'programming' },
+  { id: 'skill-ds', name: 'Data Structures', category: 'programming' },
+  { id: 'skill-algo', name: 'Algorithms', category: 'programming' },
+  { id: 'skill-sys-design', name: 'System Design', category: 'web' },
+  { id: 'skill-numpy', name: 'NumPy & Pandas', category: 'data' },
+];
+
+export const skillProfile: SkillProfile = {
+  userId: 'u-001',
+  targetRoleId: 'role-data-analyst',
+  overallAlignment: 68,
+  lastUpdated: '2025-09-16T14:30:00Z',
+  skills: [
+    {
+      skillId: 'skill-sql',
+      skillName: 'SQL',
+      currentLevel: 78,
+      targetLevel: 85,
+      proficiency: 'intermediate',
+      confidence: 'high',
+      gap: 7,
+      lastAssessed: '2025-09-15T10:00:00Z',
+      evidence: [
+        { type: 'assessment', description: 'SQL Joins & Aggregations assessment — 78%', date: '2025-09-15' },
+        { type: 'resume', description: '2 years database querying in QA role', date: '2025-08-15' },
+        { type: 'practice', description: 'Completed 12 SQL practice problems', date: '2025-09-10' },
+      ],
+    },
+    {
+      skillId: 'skill-python',
+      skillName: 'Python',
+      currentLevel: 84,
+      targetLevel: 80,
+      proficiency: 'advanced',
+      confidence: 'high',
+      gap: 0,
+      lastAssessed: '2025-09-14T10:00:00Z',
+      evidence: [
+        { type: 'assessment', description: 'Python Fundamentals assessment — 91%', date: '2025-09-14' },
+        { type: 'resume', description: 'Python automation scripts in current role', date: '2025-08-15' },
+        { type: 'project', description: 'Built data cleaning pipeline', date: '2025-09-05' },
+      ],
+    },
+    {
+      skillId: 'skill-stats',
+      skillName: 'Statistics',
+      currentLevel: 48,
+      targetLevel: 75,
+      proficiency: 'beginner',
+      confidence: 'medium',
+      gap: 27,
+      lastAssessed: '2025-09-16T10:00:00Z',
+      evidence: [
+        { type: 'assessment', description: 'Diagnostic assessment — 48%', date: '2025-09-16' },
+        { type: 'resume', description: 'Intro Statistics course (2 years ago)', date: '2025-08-15' },
+      ],
+    },
+    {
+      skillId: 'skill-viz',
+      skillName: 'Data Visualization',
+      currentLevel: 62,
+      targetLevel: 80,
+      proficiency: 'intermediate',
+      confidence: 'medium',
+      gap: 18,
+      lastAssessed: '2025-09-13T10:00:00Z',
+      evidence: [
+        { type: 'assessment', description: 'Visualization basics — 62%', date: '2025-09-13' },
+        { type: 'practice', description: 'Created 3 chart exercises in matplotlib', date: '2025-09-08' },
+      ],
+    },
+    {
+      skillId: 'skill-biz',
+      skillName: 'Business Analysis',
+      currentLevel: 51,
+      targetLevel: 70,
+      proficiency: 'beginner',
+      confidence: 'low',
+      gap: 19,
+      lastAssessed: '2025-09-16T10:00:00Z',
+      evidence: [
+        { type: 'assessment', description: 'Diagnostic assessment — 51%', date: '2025-09-16' },
+      ],
+    },
+  ],
+};
+
+export const learningModules: LearningModule[] = [
+  {
+    id: 'mod-sql-window',
+    title: 'SQL Window Functions',
+    description: 'Master ROW_NUMBER, RANK, LAG, LEAD and running totals with practical examples.',
+    skillId: 'skill-sql',
+    skillName: 'SQL',
+    difficulty: 'intermediate',
+    estimatedMinutes: 45,
+    progress: 64,
+    status: 'in-progress',
+    order: 1,
+    prerequisites: ['SQL Joins', 'SQL Aggregations'],
+    lessons: [
+      { id: 'l1', title: 'Introduction to Window Functions', duration: 8, type: 'video', completed: true },
+      { id: 'l2', title: 'ROW_NUMBER and RANK', duration: 12, type: 'video', completed: true },
+      { id: 'l3', title: 'LAG and LEAD Functions', duration: 10, type: 'interactive', completed: true },
+      { id: 'l4', title: 'Running Totals and Averages', duration: 15, type: 'video', completed: false },
+      { id: 'l5', title: 'Practice: Sales Analytics', duration: 20, type: 'practice', completed: false },
+    ],
+  },
+  {
+    id: 'mod-stats-foundations',
+    title: 'Statistics Foundations',
+    description: 'Learn probability distributions, hypothesis testing, and statistical significance.',
+    skillId: 'skill-stats',
+    skillName: 'Statistics',
+    difficulty: 'beginner',
+    estimatedMinutes: 60,
+    progress: 0,
+    status: 'not-started',
+    order: 2,
+    prerequisites: [],
+    lessons: [
+      { id: 'l1', title: 'Descriptive Statistics', duration: 10, type: 'video', completed: false },
+      { id: 'l2', title: 'Probability Distributions', duration: 15, type: 'video', completed: false },
+      { id: 'l3', title: 'Hypothesis Testing', duration: 12, type: 'interactive', completed: false },
+      { id: 'l4', title: 'P-values and Significance', duration: 10, type: 'reading', completed: false },
+      { id: 'l5', title: 'Practice: A/B Test Analysis', duration: 25, type: 'practice', completed: false },
+    ],
+  },
+  {
+    id: 'mod-viz-advanced',
+    title: 'Advanced Data Visualization',
+    description: 'Build compelling dashboards with matplotlib, seaborn, and Plotly.',
+    skillId: 'skill-viz',
+    skillName: 'Data Visualization',
+    difficulty: 'intermediate',
+    estimatedMinutes: 50,
+    progress: 30,
+    status: 'in-progress',
+    order: 3,
+    prerequisites: ['Python Basics'],
+    lessons: [
+      { id: 'l1', title: 'Chart Selection Principles', duration: 8, type: 'video', completed: true },
+      { id: 'l2', title: 'Advanced matplotlib', duration: 15, type: 'video', completed: true },
+      { id: 'l3', title: 'Interactive Plots with Plotly', duration: 12, type: 'interactive', completed: false },
+      { id: 'l4', title: 'Dashboard Design Patterns', duration: 10, type: 'reading', completed: false },
+      { id: 'l5', title: 'Practice: Sales Dashboard', duration: 25, type: 'practice', completed: false },
+    ],
+  },
+  {
+    id: 'mod-sql-advanced',
+    title: 'Advanced SQL Analytics',
+    description: 'CTEs, subqueries, and performance optimization for complex analytical queries.',
+    skillId: 'skill-sql',
+    skillName: 'SQL',
+    difficulty: 'advanced',
+    estimatedMinutes: 55,
+    progress: 0,
+    status: 'not-started',
+    order: 4,
+    prerequisites: ['SQL Window Functions'],
+    lessons: [
+      { id: 'l1', title: 'Common Table Expressions', duration: 12, type: 'video', completed: false },
+      { id: 'l2', title: 'Recursive CTEs', duration: 15, type: 'video', completed: false },
+      { id: 'l3', title: 'Query Optimization', duration: 10, type: 'reading', completed: false },
+      { id: 'l4', title: 'Practice: Cohort Analysis', duration: 25, type: 'practice', completed: false },
+    ],
+  },
+  {
+    id: 'mod-biz-analysis',
+    title: 'Business Analysis Fundamentals',
+    description: 'Translate business questions into data problems and communicate insights effectively.',
+    skillId: 'skill-biz',
+    skillName: 'Business Analysis',
+    difficulty: 'beginner',
+    estimatedMinutes: 40,
+    progress: 0,
+    status: 'not-started',
+    order: 5,
+    prerequisites: [],
+    lessons: [
+      { id: 'l1', title: 'Understanding Business Metrics', duration: 10, type: 'video', completed: false },
+      { id: 'l2', title: 'KPIs and OKRs', duration: 12, type: 'reading', completed: false },
+      { id: 'l3', title: 'Communicating with Stakeholders', duration: 8, type: 'video', completed: false },
+      { id: 'l4', title: 'Practice: Metric Definition', duration: 20, type: 'practice', completed: false },
+    ],
+  },
+  {
+    id: 'mod-pandas',
+    title: 'Pandas & Data Manipulation',
+    description: 'Clean, transform, and analyze data efficiently with Pandas.',
+    skillId: 'skill-python',
+    skillName: 'Python',
+    difficulty: 'intermediate',
+    estimatedMinutes: 50,
+    progress: 0,
+    status: 'not-started',
+    order: 6,
+    prerequisites: ['Python Basics'],
+    lessons: [
+      { id: 'l1', title: 'DataFrames and Series', duration: 10, type: 'video', completed: false },
+      { id: 'l2', title: 'Filtering and Transformation', duration: 12, type: 'interactive', completed: false },
+      { id: 'l3', title: 'GroupBy Operations', duration: 10, type: 'video', completed: false },
+      { id: 'l4', title: 'Merging and Joining', duration: 15, type: 'video', completed: false },
+      { id: 'l5', title: 'Practice: EDA Pipeline', duration: 25, type: 'practice', completed: false },
+    ],
+  },
+];
+
+export const assessments: Assessment[] = [
+  {
+    id: 'assess-diagnostic-da',
+    title: 'Data Analyst Foundations',
+    description: 'Diagnostic assessment to calibrate your current skill levels across core data analyst competencies.',
+    skillId: 'skill-sql',
+    skillName: 'Mixed',
+    totalQuestions: 15,
+    difficulty: 'intermediate',
+    adaptive: true,
+    questions: [
+      {
+        id: 'q1',
+        text: 'Which SQL clause is used to filter rows after a GROUP BY operation?',
+        type: 'multiple-choice',
+        difficulty: 'intermediate',
+        topic: 'SQL',
+        options: [
+          { id: 'a', text: 'WHERE', correct: false },
+          { id: 'b', text: 'HAVING', correct: true },
+          { id: 'c', text: 'FILTER', correct: false },
+          { id: 'd', text: 'AFTER GROUP', correct: false },
+        ],
+        explanation: 'HAVING filters rows after aggregation, while WHERE filters before grouping.',
+      },
+      {
+        id: 'q2',
+        text: 'In Python, which Pandas method is used to remove missing values from a DataFrame?',
+        type: 'multiple-choice',
+        difficulty: 'beginner',
+        topic: 'Python',
+        options: [
+          { id: 'a', text: 'dropna()', correct: true },
+          { id: 'b', text: 'remove_na()', correct: false },
+          { id: 'c', text: 'fillna(none)', correct: false },
+          { id: 'd', text: 'clean()', correct: false },
+        ],
+        explanation: 'dropna() removes rows or columns with missing values from a DataFrame.',
+      },
+      {
+        id: 'q3',
+        text: 'A p-value of 0.03 in a hypothesis test with alpha=0.05 means:',
+        type: 'multiple-choice',
+        difficulty: 'intermediate',
+        topic: 'Statistics',
+        options: [
+          { id: 'a', text: 'The null hypothesis is definitely false', correct: false },
+          { id: 'b', text: 'There is a 3% probability the null hypothesis is true', correct: false },
+          { id: 'c', text: 'We reject the null hypothesis at the 0.05 significance level', correct: true },
+          { id: 'd', text: 'The result is practically significant', correct: false },
+        ],
+        explanation: 'A p-value below alpha means we reject the null hypothesis at that significance level.',
+      },
+      {
+        id: 'q4',
+        text: 'Which chart type is best for showing the distribution of a continuous variable?',
+        type: 'multiple-choice',
+        difficulty: 'beginner',
+        topic: 'Visualization',
+        options: [
+          { id: 'a', text: 'Pie chart', correct: false },
+          { id: 'b', text: 'Histogram', correct: true },
+          { id: 'c', text: 'Bar chart', correct: false },
+          { id: 'd', text: 'Line chart', correct: false },
+        ],
+        explanation: 'Histograms show the distribution of continuous data by binning values into intervals.',
+      },
+      {
+        id: 'q5',
+        text: 'You have a table of orders with columns: order_id, customer_id, order_date, amount. Write a query to find the top 3 customers by total spending. Which approach is correct?',
+        type: 'scenario',
+        difficulty: 'advanced',
+        topic: 'SQL',
+        options: [
+          { id: 'a', text: 'SELECT customer_id, SUM(amount) FROM orders ORDER BY amount DESC LIMIT 3', correct: false },
+          { id: 'b', text: 'SELECT customer_id, SUM(amount) as total FROM orders GROUP BY customer_id ORDER BY total DESC LIMIT 3', correct: true },
+          { id: 'c', text: 'SELECT customer_id, COUNT(amount) FROM orders GROUP BY customer_id LIMIT 3', correct: false },
+          { id: 'd', text: 'SELECT TOP 3 customer_id, amount FROM orders', correct: false },
+        ],
+        explanation: 'You need GROUP BY customer_id with SUM(amount), then ORDER BY the aggregate DESC with LIMIT 3.',
+      },
+      {
+        id: 'q6',
+        text: 'What does correlation coefficient r = -0.85 indicate?',
+        type: 'multiple-choice',
+        difficulty: 'intermediate',
+        topic: 'Statistics',
+        options: [
+          { id: 'a', text: 'Weak positive relationship', correct: false },
+          { id: 'b', text: 'Strong negative relationship', correct: true },
+          { id: 'c', text: 'No relationship', correct: false },
+          { id: 'd', text: 'Strong positive relationship', correct: false },
+        ],
+        explanation: 'A correlation of -0.85 indicates a strong negative linear relationship between two variables.',
+      },
+    ],
+  },
+];
+
+export const projects: Project[] = [
+  {
+    id: 'proj-1',
+    title: 'E-commerce Sales Analysis Dashboard',
+    description: 'Build an interactive dashboard analyzing sales trends, customer segments, and product performance from a real e-commerce dataset.',
+    skillIds: ['skill-sql', 'skill-python', 'skill-viz'],
+    difficulty: 'intermediate',
+    estimatedHours: 8,
+    status: 'in-progress',
+    progress: 45,
+    deliverables: [
+      'SQL queries for data extraction',
+      'Python data cleaning and transformation script',
+      'Interactive dashboard with 5+ visualizations',
+      'Executive summary with key insights',
+    ],
+    skillsPracticed: ['SQL', 'Python', 'Data Visualization', 'Business Analysis'],
+  },
+  {
+    id: 'proj-2',
+    title: 'A/B Test Analysis Report',
+    description: 'Analyze an A/B test experiment, determine statistical significance, and present recommendations to stakeholders.',
+    skillIds: ['skill-stats', 'skill-python', 'skill-biz'],
+    difficulty: 'intermediate',
+    estimatedHours: 6,
+    status: 'not-started',
+    progress: 0,
+    deliverables: [
+      'Statistical analysis with hypothesis testing',
+      'Effect size and confidence interval calculations',
+      'Visual summary of results',
+      'Stakeholder presentation with recommendations',
+    ],
+    skillsPracticed: ['Statistics', 'Python', 'Business Analysis'],
+  },
+  {
+    id: 'proj-3',
+    title: 'Customer Churn Prediction Pipeline',
+    description: 'Build a data pipeline that identifies at-risk customers using SQL features and Python analysis.',
+    skillIds: ['skill-sql', 'skill-python', 'skill-stats'],
+    difficulty: 'advanced',
+    estimatedHours: 12,
+    status: 'not-started',
+    progress: 0,
+    deliverables: [
+      'Feature engineering SQL queries',
+      'Exploratory data analysis notebook',
+      'Churn risk scoring model',
+      'Actionable customer segments',
+    ],
+    skillsPracticed: ['SQL', 'Python', 'Statistics', 'Data Visualization'],
+  },
+  {
+    id: 'proj-4',
+    title: 'Marketing Campaign ROI Analysis',
+    description: 'Analyze multi-channel marketing data to measure campaign effectiveness and optimize spend allocation.',
+    skillIds: ['skill-sql', 'skill-biz', 'skill-viz'],
+    difficulty: 'beginner',
+    estimatedHours: 5,
+    status: 'submitted',
+    progress: 100,
+    deliverables: [
+      'Campaign performance SQL analysis',
+      'ROI calculation by channel',
+      'Visualization of spend vs. conversion',
+      'Budget reallocation recommendation',
+    ],
+    skillsPracticed: ['SQL', 'Business Analysis', 'Data Visualization'],
+  },
+];
+
+export const learningProgress: LearningProgress = {
+  weeklyTime: 185,
+  weeklyGoal: 300,
+  topicsCompleted: 14,
+  assessmentsCompleted: 3,
+  projectsCompleted: 1,
+  streakDays: 12,
+  dailyMinutes: [
+    { day: 'Mon', minutes: 45 },
+    { day: 'Tue', minutes: 30 },
+    { day: 'Wed', minutes: 60 },
+    { day: 'Thu', minutes: 15 },
+    { day: 'Fri', minutes: 35 },
+    { day: 'Sat', minutes: 0 },
+    { day: 'Sun', minutes: 0 },
+  ],
+  recentActivity: [
+    { id: 'a1', type: 'lesson', description: 'Completed: SQL Window Functions — LAG and LEAD', timestamp: '2025-09-17T15:30:00Z', skillId: 'skill-sql' },
+    { id: 'a2', type: 'assessment', description: 'Completed Statistics diagnostic assessment — 48%', timestamp: '2025-09-16T11:00:00Z', skillId: 'skill-stats' },
+    { id: 'a3', type: 'lesson', description: 'Started: Advanced Data Visualization — Interactive Plots', timestamp: '2025-09-15T14:00:00Z', skillId: 'skill-viz' },
+    { id: 'a4', type: 'project', description: 'Project submitted: Marketing Campaign ROI Analysis', timestamp: '2025-09-14T16:30:00Z' },
+    { id: 'a5', type: 'skill-update', description: 'Skill profile updated — Python proficiency raised to Advanced', timestamp: '2025-09-14T10:00:00Z', skillId: 'skill-python' },
+    { id: 'a6', type: 'lesson', description: 'Completed: SQL Window Functions — ROW_NUMBER and RANK', timestamp: '2025-09-13T09:00:00Z', skillId: 'skill-sql' },
+  ],
+};
+
+export const aiMessages: AIMessage[] = [
+  {
+    id: 'm1',
+    role: 'user',
+    content: 'I already know Python basics. I don\'t want to repeat them.',
+    timestamp: '2025-09-16T12:00:00Z',
+  },
+  {
+    id: 'm2',
+    role: 'ai',
+    content: 'Got it. Your assessment indicates strong Python fundamentals (84% — Advanced), so I\'ve skipped the beginner Python module. Your current priority is Pandas and data manipulation, since that\'s the gap between your Python skills and what a Data Analyst role requires. I\'ve added "Pandas & Data Manipulation" as your next recommended module.',
+    timestamp: '2025-09-16T12:00:05Z',
+    metadata: { moduleRef: 'mod-pandas', skillRef: 'skill-python' },
+  },
+  {
+    id: 'm3',
+    role: 'user',
+    content: 'What should I focus on this week?',
+    timestamp: '2025-09-17T09:00:00Z',
+  },
+  {
+    id: 'm4',
+    role: 'ai',
+    content: 'Based on your skill gaps and learning history, I recommend focusing on two areas this week:\n\n1. **SQL Window Functions** — You\'re 64% through this module. Finishing it will close your SQL gap (78% → ~85%).\n2. **Statistics Foundations** — This is your largest gap (48% vs 75% target). Even 30 minutes/day would make significant progress.\n\nI\'ve adjusted your weekly plan to prioritize these. Your Python and visualization skills are on track, so I\'ve paused those modules.',
+    timestamp: '2025-09-17T09:00:05Z',
+    metadata: { skillRef: 'skill-sql', action: 'reorder-priorities' },
+  },
+];
+
+export const recommendations: Recommendation[] = [
+  {
+    id: 'rec-1',
+    type: 'module',
+    title: 'SQL Window Functions',
+    description: 'Spend 25 minutes on window functions before moving to advanced analytics.',
+    skillId: 'skill-sql',
+    skillName: 'SQL',
+    estimatedMinutes: 25,
+    priority: 'high',
+    reason: 'You\'re 64% through this module and completing it will close your SQL gap.',
+  },
+  {
+    id: 'rec-2',
+    type: 'module',
+    title: 'Statistics Foundations',
+    description: 'Start with descriptive statistics and probability distributions.',
+    skillId: 'skill-stats',
+    skillName: 'Statistics',
+    estimatedMinutes: 30,
+    priority: 'high',
+    reason: 'Statistics is your largest skill gap (48% vs 75% target).',
+  },
+  {
+    id: 'rec-3',
+    type: 'practice',
+    title: 'A/B Test Analysis',
+    description: 'Apply hypothesis testing concepts to a real experiment dataset.',
+    skillId: 'skill-stats',
+    skillName: 'Statistics',
+    estimatedMinutes: 40,
+    priority: 'medium',
+    reason: 'Practical application will reinforce statistical concepts.',
+  },
+];
+
+export const skillGapData = [
+  { skill: 'SQL', current: 78, target: 85, gap: 7 },
+  { skill: 'Python', current: 84, target: 80, gap: 0 },
+  { skill: 'Statistics', current: 48, target: 75, gap: 27 },
+  { skill: 'Visualization', current: 62, target: 80, gap: 18 },
+  { skill: 'Business Analysis', current: 51, target: 70, gap: 19 },
+];
+
+export function getRoleById(id: string): JobRole | undefined {
+  return jobRoles.find((r) => r.id === id);
+}
+
+export function getSkillById(id: string): Skill | undefined {
+  return allSkills.find((s) => s.id === id);
+}
+
+export function getTargetRole(): JobRole {
+  return getRoleById(currentUser.targetRoleId) ?? jobRoles[0];
+}
+
+export function getTopPriorities(): { skillName: string; currentLevel: number; targetLevel: number; gap: number }[] {
+  return skillProfile.skills
+    .filter((s) => s.gap > 0)
+    .sort((a, b) => b.gap - a.gap)
+    .slice(0, 3)
+    .map((s) => ({
+      skillName: s.skillName,
+      currentLevel: s.currentLevel,
+      targetLevel: s.targetLevel,
+      gap: s.gap,
+    }));
+}
