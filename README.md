@@ -126,9 +126,3 @@ Computer Science and Engineering Student
 [GitHub Profile](https://github.com/akshayashreecode038)
 
 ---
-
-<p align="center">
-  **SkillForge Intelligence**
-  <br/>
-  Build Skills. Unlock Potential. Evolve Continuously. 🚀
-</p>
