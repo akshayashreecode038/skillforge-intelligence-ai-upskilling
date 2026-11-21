@@ -108,6 +108,13 @@ The objective of SkillForge Intelligence is to explore how artificial intelligen
 
 By combining AI-oriented functionality with a modular application architecture, the project aims to create a foundation for intelligent and accessible upskilling experiences.
 
+## Screenshots 
+<img width="1552" height="913" alt="Screenshot 2026-09-19 134632" src="https://github.com/user-attachments/assets/76f8e92f-0303-42ff-a180-31ecda6b8c5f" />
+<img width="1522" height="1121" alt="Screenshot 2026-09-19 134759" src="https://github.com/user-attachments/assets/a72288e7-20ac-4901-a39e-e95387b1be1d" />
+<img width="637" height="218" alt="Screenshot 2026-09-19 140150" src="https://github.com/user-attachments/assets/8e947edb-83ce-44fa-978c-8a3e2bbadd85" />
+<img width="661" height="497" alt="Screenshot 2026-09-19 140130" src="https://github.com/user-attachments/assets/10e6c5c5-ca6a-4203-8366-47bed73d1b6a" />
+
+
 ## 🔮 Future Scope
 
 - More personalized learning recommendations.
